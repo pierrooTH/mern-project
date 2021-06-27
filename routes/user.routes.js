@@ -5,6 +5,12 @@ const userController = require('../controllers/user.controller');
 
 // auth 
 router.post('/register', authController.signUp);
+// lorsqu'on va sur la route /login on lance la fonction signIn dans le authController 
+router.post("/login", authController.signIn);
+// lorsqu'on va sur la route /logout on lancera la fonction logout donc 
+// cela veut dire qu'on retirera son cookie d'authentification
+// donc l'utilisateur sera déconnecté 
+router.get("/logout", authController.logout);
 
 
 // User DB

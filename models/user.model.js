@@ -59,6 +59,23 @@ userSchema.pre("save", async function(next) {
     next();
 })
 
+// quand on va tenter de se loger, on va récupérer l'email et le password 
+// et bcrypt va comparer les deux cryptage entre le vrai password et celui crypter 
+// et va nous dire si c'est les mêmes
+// (pas de fonction fléchée pour le scope : afin de récupéré le this.findOne({email})
+
+userSchema.statics.login = async function(email, password) {
+  const user = await this.findOne({ email });
+  if (user) {   
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error('incorrect password');
+  }
+  throw Error('incorrect email');
+};
+
 const UserModel = mongoose.model("user", userSchema);
 
 module.exports = UserModel;
