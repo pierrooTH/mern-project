@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
+const postRoutes = require('./routes/post.routes');
 require('dotenv').config({path: './config/.env'});
 // connexion a la BD de MongoDB dans le fichier db.js dans le dossier config
 require('./config/db');
@@ -23,6 +24,7 @@ app.get('/jwtid', requireAuth, (req,res) => {
 
 // routes
 app.use('/user', userRoutes);
+app.use('/post', postRoutes);
 
 // lancement du serveur sur port 5000
 app.listen(process.env.PORT, () => {
